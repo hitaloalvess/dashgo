@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import {Flex,
         Box,
         Heading, 
@@ -17,6 +18,7 @@ import { RiAddLine, RiPencilLine } from 'react-icons/ri';
 import Header from '../../components/Header';
 import Pagination from '../../components/Pagination';
 import SideBar from '../../components/SideBar';
+import ActivatedLink from '../../components/ActivatedLink';
 
 export default function UserList(){
 
@@ -49,15 +51,17 @@ export default function UserList(){
                       mb="8"
                     >
                         <Heading size="lg" fontWeight="normal">Usuários</Heading>
-                        <Button
-                          as="a"
-                          size="sm"
-                          fontSize="sm"
-                          colorScheme="pink"
-                          leftIcon={<Icon as={RiAddLine} fontSize="20" />}
-                          >
-                            Criar novo
-                        </Button>
+                        <ActivatedLink showMatchExactHref href="/users/create" passHref>
+                            <Button
+                            as="a"
+                            size="sm"
+                            fontSize="sm"
+                            colorScheme="pink"
+                            leftIcon={<Icon as={RiAddLine} fontSize="20" />}
+                            >
+                                Criar novo
+                            </Button>
+                        </ActivatedLink>
 
                     </Flex>
                     
