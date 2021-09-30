@@ -1,4 +1,17 @@
-import {Flex, Box, Heading, Button, Checkbox, Icon, Table, Thead, Tr, Th, Tbody, Td, Text} from '@chakra-ui/react';
+import {Flex,
+        Box,
+        Heading, 
+        Button, 
+        Checkbox, 
+        Icon, 
+        Table, 
+        Thead, 
+        Tr, 
+        Th, 
+        Tbody, 
+        Td, 
+        Text} from '@chakra-ui/react';
+import { useBreakpointValue } from '@chakra-ui/media-query'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri';
 
 import Header from '../../components/Header';
@@ -6,6 +19,11 @@ import Pagination from '../../components/Pagination';
 import SideBar from '../../components/SideBar';
 
 export default function UserList(){
+
+    const isWideVersion = useBreakpointValue({
+        base:false,
+        lg:true
+    })
 
     return(
         <Flex direction="column" h="100vh">
@@ -16,7 +34,6 @@ export default function UserList(){
                 my="6"
                 maxWidth="90%"
                 mx="auto"
-                px="6"
             >
                 <SideBar />
 
@@ -24,7 +41,7 @@ export default function UserList(){
                   flex="1"
                   bg="gray.800"
                   borderRadius="8"
-                  p="8"
+                  p={["6", "8"]}
                 >
                     <Flex
                       justify="space-between"
@@ -47,35 +64,37 @@ export default function UserList(){
                     <Table>
                         <Thead>
                             <Tr>
-                                <Th px="6" color="gray.300" w="8">
+                                <Th px={["4", "4", "6"]} color="gray.300" w="8">
                                     <Checkbox colorScheme="pink" />
                                 </Th>
                                 <Th>Usuário</Th>
-                                <Th>Data de cadastro</Th>
-                                <Th></Th>
+                                { isWideVersion && <Th>Data de cadastro</Th> }
+                                { isWideVersion &&  ( <Th></Th> )}
                             </Tr>
                         </Thead>
                         <Tbody>
                             <Tr>
-                                <Td px="6" color="gray.300" w="8">
+                                <Td px={["4", "4", "6"]} color="gray.300" w="8">
                                 <Checkbox colorScheme="pink" />
                                 </Td>
                                 <Td>
                                     <Text fontWeight="bold">Hitalo Rodrigo Alves</Text>
                                     <Text size="sm" color="gray.300" >hitalo.ralves@outlook.com</Text>
                                 </Td>
-                                <Td> 29 de Set, 2021 </Td>
-                                <Td w="8">
-                                    <Button
-                                      as="a"
-                                      size="sm"
-                                      fontSize="sm"
-                                      colorScheme="purple"
-                                      leftIcon={<Icon as={RiPencilLine} fontSize="20" />}
-                                      >
-                                        Editar
-                                    </Button>
-                                </Td>
+                                { isWideVersion && <Td> 29 de Set, 2021 </Td>}
+                                {isWideVersion && (
+                                    <Td w="8">
+                                        <Button
+                                        as="a"
+                                        size="sm"
+                                        fontSize="sm"
+                                        colorScheme="purple"
+                                        leftIcon={<Icon as={RiPencilLine} fontSize="20" />}
+                                        >
+                                            Editar
+                                        </Button>
+                                    </Td>
+                                )}
                             </Tr>
                         </Tbody>
                     </Table>
