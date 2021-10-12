@@ -1,38 +1,17 @@
-import { useEffect } from 'react';
 import {Flex, Box, Heading, Button, Checkbox, Icon, Table, Thead, Tr, Th, Tbody, Td, Text, Spinner} from '@chakra-ui/react';
 import { useBreakpointValue } from '@chakra-ui/media-query'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri';
-import { useQuery } from 'react-query';
+
 
 import Header from '../../components/Header';
 import Pagination from '../../components/Pagination';
 import SideBar from '../../components/SideBar';
 import ActivatedLink from '../../components/ActivatedLink';
+import { useUsers } from '../../services/hooks/useUsers';
 
 export default function UserList(){
 
-    const { data, isLoading, error } = useQuery('users', async() => {
-        const response = await fetch('http://localhost:3000/api/users')
-        const data = await response.json()
-
-        const users = data.users.map( user => {
-            return {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                created_at: new Date(user.createdAt).toLocaleString('pt-BR', {
-                    day: '2-digit',
-                    month: 'long',
-                    year: 'numeric'
-                })
-            }
-        })
-
-        return users;
-    },{
-        staleTime: 1000 * 5, //5 seconds
-    } )
-
+    const { data, isLoading, isFetching, error } = useUsers();
     const isWideVersion = useBreakpointValue({
         base:false,
         lg:true
@@ -62,7 +41,10 @@ export default function UserList(){
                       align="center"
                       mb="8"
                     >
-                        <Heading size="lg" fontWeight="normal">Usuários</Heading>
+                        <Heading size="lg" fontWeight="normal">
+                            Usuários
+                            { !isLoading && isFetching && <Spinner fontSize="sm" color="gray.500" ml="4" />}    
+                        </Heading>
                         <ActivatedLink showMatchExactHref href="/users/create" passHref>
                             <Button
                             as="a"
@@ -100,7 +82,7 @@ export default function UserList(){
                             </Thead>
                             <Tbody>
                                 { data.map( user => (
-                                    <Tr>
+                                    <Tr key={user.id}>
                                         <Td px={["4", "4", "6"]} color="gray.300" w="8">
                                             <Checkbox colorScheme="pink" />
                                         </Td>
@@ -108,7 +90,7 @@ export default function UserList(){
                                             <Text fontWeight="bold">{user.name}</Text>
                                             <Text size="sm" color="gray.300" >{user.email}</Text>
                                         </Td>
-                                        { isWideVersion && <Td>{user.created_at}</Td>}
+                                        { isWideVersion && <Td>{user.createdAt}</Td>}
                                         {isWideVersion && (
                                             <Td w="8">
                                                 <Button
