@@ -2,7 +2,7 @@ import {Flex, Box, Heading, Button, Checkbox, Icon, Table, Thead, Tr, Th, Tbody,
 import { useBreakpointValue } from '@chakra-ui/media-query'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri';
 import { useState } from 'react';
-import { useUsers } from '../../services/hooks/useUsers';
+import { getUsers, useUsers } from '../../services/hooks/useUsers';
 import { queryClient } from '../../services/queryClient';
 import { api } from '../../services/api';
 
@@ -11,6 +11,7 @@ import Header from '../../components/Header';
 import Pagination from '../../components/Pagination';
 import SideBar from '../../components/SideBar';
 import ActivatedLink from '../../components/ActivatedLink';
+import { GetServerSideProps } from 'next';
 
 
 async function handlePrefetchUser(id : string){
@@ -22,11 +23,13 @@ async function handlePrefetchUser(id : string){
         staleTime: 1000 * 60 * 10 // 10 minutes
     })
 }
-export default function UserList(){
+export default function UserList({users}){
 
     const [page, setPage] = useState<number>(1);
 
-    const { data, isLoading, isFetching, error } = useUsers(page);
+    const { data, isLoading, isFetching, error } = useUsers(page, {
+        initialData: users
+    });
     const isWideVersion = useBreakpointValue({
         base:false,
         lg:true
@@ -139,4 +142,15 @@ export default function UserList(){
 
         </Flex>
     );
+}
+
+export const getServerSideProps: GetServerSideProps = async() => {
+
+    const { users, totalCount } = await getUsers(1)
+
+    return {
+        props:{
+            users
+        }
+    }
 }

@@ -34,11 +34,9 @@ export function makeServer(){
             this.namespace='api'
             this.timing = 750
             
-            this.post('/users')
-            this.get('/users/:id') // já entende que deseja buscar o usuário pelo id
             this.get('/users', function(schema, request ){
                 const { page = 1, per_page = 10 } = request.queryParams;
-
+                
                 const total = schema.all('users').length
 
                 const pageStart = (Number(page) - 1) * Number(per_page)
@@ -52,11 +50,12 @@ export function makeServer(){
                     { 'x-total-count': String(total) }, //headers
                     { users }
                 )
-            }) //já entende que deseja realizar a inserção de um usuário
-            
-            this.namespace = '' //utilizado para não haver conflito com API routes que também possuem /api
-            this.passthrough() // Por padrão, o Mirage gerará um erro se seu aplicativo JavaScript fizer uma solicitação que não tenha um manipulador de rota correspondente definido.
-            //Para evitar isso, diga ao Mirage para permitir a passagem de solicitações não processadas:
+            }) 
+            this.get('/users/:id') 
+            this.post('/users')
+
+            this.namespace = ''
+            this.passthrough() 
         }
     })
 

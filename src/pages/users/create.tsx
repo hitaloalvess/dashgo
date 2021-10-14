@@ -35,7 +35,7 @@ export default function CreateUser(){
 
     const create = useMutation(async(user: CreateUserFormData) => {
       const response = await api.post<any>('users',{
-        user: {
+        users: {
           ...user,
           created_at: new Date()
         }
@@ -50,7 +50,6 @@ export default function CreateUser(){
         resolver: yupResolver(createUserFormSchema)
     });
     const { errors } = formState
-    console.log(errors)
     
   const handleCreateUser : SubmitHandler<CreateUserFormData> = async(values) => {
     // await new Promise( resolve => setTimeout(resolve, 2000) )
