@@ -1,17 +1,32 @@
-import {Flex, Box, Heading, Button, Checkbox, Icon, Table, Thead, Tr, Th, Tbody, Td, Text, Spinner} from '@chakra-ui/react';
+import {Flex, Box, Heading, Button, Checkbox, Icon, Table, Thead, Tr, Th, Tbody, Td, Text, Spinner, Link} from '@chakra-ui/react';
 import { useBreakpointValue } from '@chakra-ui/media-query'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri';
+import { useState } from 'react';
+import { useUsers } from '../../services/hooks/useUsers';
+import { queryClient } from '../../services/queryClient';
+import { api } from '../../services/api';
 
 
 import Header from '../../components/Header';
 import Pagination from '../../components/Pagination';
 import SideBar from '../../components/SideBar';
 import ActivatedLink from '../../components/ActivatedLink';
-import { useUsers } from '../../services/hooks/useUsers';
 
+
+async function handlePrefetchUser(id : string){
+    await queryClient.prefetchQuery(['user', id], async () => {
+        const response = await api.get(`users/${id}`)
+
+        return response.data;
+    }, {
+        staleTime: 1000 * 60 * 10 // 10 minutes
+    })
+}
 export default function UserList(){
 
-    const { data, isLoading, isFetching, error } = useUsers();
+    const [page, setPage] = useState<number>(1);
+
+    const { data, isLoading, isFetching, error } = useUsers(page);
     const isWideVersion = useBreakpointValue({
         base:false,
         lg:true
@@ -81,13 +96,15 @@ export default function UserList(){
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                { data.map( user => (
+                                { data.users.map( user => (
                                     <Tr key={user.id}>
                                         <Td px={["4", "4", "6"]} color="gray.300" w="8">
                                             <Checkbox colorScheme="pink" />
                                         </Td>
                                         <Td>
-                                            <Text fontWeight="bold">{user.name}</Text>
+                                            <Link color="purple.400" onMouseEnter={() => handlePrefetchUser(user.id)} >
+                                                <Text fontWeight="bold">{user.name}</Text>
+                                            </Link>
                                             <Text size="sm" color="gray.300" >{user.email}</Text>
                                         </Td>
                                         { isWideVersion && <Td>{user.createdAt}</Td>}
@@ -108,7 +125,12 @@ export default function UserList(){
                                 ))}
                             </Tbody>
                             </Table>
-                            <Pagination />
+                            <Pagination 
+                                totalCountofRegister={data.totalCount}
+                                registerPerPage={10}
+                                currentPage={page}
+                                onPageChange={setPage}
+                            />
                         </>
                     )}
                 
