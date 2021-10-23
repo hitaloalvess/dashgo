@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Input }  from '../components/Form/Input';
+import { useAuth } from '../services/hooks/useAuth';
 
 type SignInFormData = {
   email:string;
@@ -17,14 +18,16 @@ const signInFormSchema = yup.object({
 
 export default function Home() {
 
+  const { signIn } = useAuth();
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(signInFormSchema) 
   });
   const { errors } = formState;
 
   const handleSignIn : SubmitHandler<SignInFormData> = async (values) => {
-    await new Promise( resolve => setTimeout(resolve, 2000) )
-    console.log(values)
+    // await new Promise( resolve => setTimeout(resolve, 2000) )
+    console.log(values);
+    await signIn(values)
   }
 
   return (
