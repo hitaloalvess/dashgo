@@ -12,7 +12,7 @@ import Pagination from '../../components/Pagination';
 import SideBar from '../../components/SideBar';
 import ActivatedLink from '../../components/ActivatedLink';
 import { GetServerSideProps } from 'next';
-
+import { makeServer } from '../../services/mirage';
 
 async function handlePrefetchUser(id : string){
     await queryClient.prefetchQuery(['user', id], async () => {
