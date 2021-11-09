@@ -30,7 +30,6 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 
 ## 💻 Projeto
 
-<p>Github-explorer é uma página simples para listagem e armazenamento em cachê de repósitorios interessantes do github.</p>
 <p>Dashgo foi desenvolvido durante o quarto módulo do treinamento Ignite da rocketseat, a aplicação é uma dashboard, que atualmente realiza o cadastro, listagem e edição de usuários.</p>
 <p>O principal objetivo do seu desenvolvimento foi o de criar uma aplicação totalmente responsiva utilizando a biblioteca Chakra UI, e também colocar em prática conceitos referentes a biblioteca React Query.</p>
 
