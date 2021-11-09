@@ -56,7 +56,6 @@ users:[
             password: 'suaSenha'
         }
     ]
-Esse será seu e-mail e password para entrar na aplicação.
 
 # Iniciando projeto
 yarn dev
