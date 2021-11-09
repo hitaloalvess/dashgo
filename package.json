@@ -25,6 +25,7 @@
     "react-hook-form": "^7.16.2",
     "react-icons": "^4.2.0",
     "react-query": "^3.26.0",
+    "react-toastify": "^8.1.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {

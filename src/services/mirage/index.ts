@@ -26,17 +26,26 @@ export function makeServer(){
                    return faker.date.recent(10)
                } 
             })
+            
         },
         seeds(server){
-            server.createList('user', 200);
+            server.createList('user', 200),
+            server.db.loadData({
+                users:[
+                    {
+                        name: 'Hitalo R Alves',
+                        email: 'hitalo.ralves@hotmail.com',
+                        password: 'fut10@gol'
+                    }
+                ]
+            })
         },
         routes(){
-            this.urlPrefix= 'http://localhost:3000'
             this.namespace='api'
             this.timing = 750
 
-
             this.get('/users', function(schema, request ){
+                console.log('Dentro de users')
                 const { page = 1, per_page = 10 } = request.queryParams;
                 
                 const total = schema.all('users').length
@@ -53,11 +62,24 @@ export function makeServer(){
                     { users }
                 )
             }) 
-            this.get('/users/:id') 
+            this.get('/users/:id')
+            this.get('/users/:email') 
+
             this.post('/users')
+            this.post('/sessions', function(schema, request){
+
+                const { email, password } = JSON.parse(request.requestBody);
+                const user = schema.db.users.findBy({email, password});
+
+                if(user){
+                    const {name, email, password } = user;
+                    return new Response(200,{}, { name, email, password });
+                }
+
+                return new Response(401,{}, { error: 'E-mail ou senha estão incorretos'});
+            })
 
             this.namespace = ''
-
             this.passthrough()
         }
     })

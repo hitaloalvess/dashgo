@@ -1,34 +1,69 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">
+  <img alt="logo dashgo" title="dashgo" src=".github/logo.svg" width="400px" />
+</h1>
 
-## Getting Started
+<!-- <p align="center">
+     <img src=".github/preview.gif" alt="github-explorer demo" />
+</p> -->
 
-First, run the development server:
+<p align="center">
+  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-como-usar?">Como usar?</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+
+## 🛠 Tecnologias 🚀
+
+Este projeto foi desenvolvido com as seguintes tecnologias:
+
+- <a href="https://pt-br.reactjs.org/">Nextjs</a>
+- <a href="https://chakra-ui.com/">Chakra UI</a>
+- <a href="https://www.typescriptlang.org/">Typescript</a>
+- <a href="https://apexcharts.com/">Apexcharts</a>
+- <a href="https://react-hook-form.com/">React-hook-form</a>
+- <a href="https://react-query.tanstack.com/">React-query</a>
+- <a href="https://miragejs.com/">Miragejs</a>
+- <a href="https://react-icons.github.io/react-icons/">React-Icons</a>
+- <a href="https://github.com/jquense/yup">Yup</a>
+- <a href="https://github.com/marak/Faker.js/">Faker</a>
+- <a href="https://yarnpkg.com/">Yarn</a>
+
+## 💻 Projeto
+
+<p>Github-explorer é uma página simples para listagem e armazenamento em cachê de repósitorios interessantes do github.</p>
+<p>Dashgo foi desenvolvido durante o quarto módulo do treinamento Ignite da rocketseat, a aplicação é uma dashboard, que atualmente realiza o cadastro, listagem e edição de usuários.</p>
+<p>O principal objetivo do seu desenvolvimento foi o de criar uma aplicação totalmente responsiva utilizando a biblioteca Chakra UI, e também colocar em prática conceitos referentes a biblioteca React Query.</p>
+
+
+## ⌨ Como usar?
+
+Em primeiro lugar, clone o repositório:
 
 ```bash
-npm run dev
-# or
+# Clonando o repositório
+git clone https://github.com/hitaloalvess/dashgo.git
+
+# ✅ Em sequência:
+
+# Instale as dependências:
+yarn install
+
+# Vá até o arquivo src/services/mirage/index.ts e adicione o seguinte código dentro de seeds:
+
+server.db.loadData({
+                users:[
+                    {
+                        name: 'seuNome',
+                        email: 'seuEmail',
+                        password: 'suaSenha'
+                    }
+                ]
+})
+ 
+
+# Iniciando projeto
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+Made with ♥ by Hitalo 🚀

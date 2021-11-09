@@ -1,10 +1,12 @@
+import Router from 'next/router'
 import Head from 'next/head';
 import { Flex, Button, Stack } from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Input }  from '../components/Form/Input';
-import { useAuth } from '../services/hooks/useAuth';
+import { api } from '../services/api';
+import { toast } from 'react-toastify';
 
 type SignInFormData = {
   email:string;
@@ -23,8 +25,24 @@ export default function Home() {
   const { errors } = formState;
 
   const handleSignIn : SubmitHandler<SignInFormData> = async (values) => {
-    await new Promise( resolve => setTimeout(resolve, 2000) )
-    console.log(values)
+    try{
+      const {email, password} = values;
+      const { data }= await api.post('/sessions', { email, password });
+
+      if(data){
+        Router.push('/dashboard');
+      }
+
+    }catch(error){
+      const { status, data } = error.response
+
+      if(status === 401){
+        toast.error(`${data.error}`);
+        return;
+      }
+
+      console.log(error);
+    }
   }
 
   return (

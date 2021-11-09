@@ -2,7 +2,7 @@ import {Flex, Box, Heading, Button, Checkbox, Icon, Table, Thead, Tr, Th, Tbody,
 import { useBreakpointValue } from '@chakra-ui/media-query'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri';
 import { useState } from 'react';
-import { getUsers, useUsers } from '../../services/hooks/useUsers';
+import { useUsers } from '../../services/hooks/useUsers';
 import { queryClient } from '../../services/queryClient';
 import { api } from '../../services/api';
 
@@ -11,18 +11,8 @@ import Header from '../../components/Header';
 import Pagination from '../../components/Pagination';
 import SideBar from '../../components/SideBar';
 import ActivatedLink from '../../components/ActivatedLink';
-import { GetServerSideProps } from 'next';
-import { makeServer } from '../../services/mirage';
 
-async function handlePrefetchUser(id : string){
-    await queryClient.prefetchQuery(['user', id], async () => {
-        const response = await api.get(`users/${id}`)
 
-        return response.data;
-    }, {
-        staleTime: 1000 * 60 * 10 // 10 minutes
-    })
-}
 export default function UserList({users}){
 
     const [page, setPage] = useState<number>(1);
@@ -30,11 +20,22 @@ export default function UserList({users}){
     const { data, isLoading, isFetching, error } = useUsers(page, {
         initialData: users
     });
+
     const isWideVersion = useBreakpointValue({
         base:false,
         lg:true
     })
 
+    async function handlePrefetchUser(id : string){
+        console.log('Dentro de handlePrefetchUser')
+        await queryClient.prefetchQuery(['user', id], async () => {
+            const response = await api.get(`users/${id}`)
+    
+            return response.data;
+        }, {
+            staleTime: 1000 * 60 * 10 // 10 minutes
+        })
+    }
 
     return(
         <Flex direction="column" h="100vh">
@@ -142,15 +143,4 @@ export default function UserList({users}){
 
         </Flex>
     );
-}
-
-export const getServerSideProps: GetServerSideProps = async() => {
-
-    const { users, totalCount } = await getUsers(1)
-
-    return {
-        props:{
-            users
-        }
-    }
 }
