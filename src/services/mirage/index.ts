@@ -33,9 +33,9 @@ export function makeServer(){
             server.db.loadData({
                 users:[
                     {
-                        name: 'Hitalo R Alves',
-                        email: 'hitalo.ralves@hotmail.com',
-                        password: 'fut10@gol'
+                        name: '',
+                        email: '',
+                        password: ''
                     }
                 ]
             })

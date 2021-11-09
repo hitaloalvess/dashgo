@@ -48,18 +48,15 @@ git clone https://github.com/hitaloalvess/dashgo.git
 # Instale as dependências:
 yarn install
 
-# Vá até o arquivo src/services/mirage/index.ts e adicione o seguinte código dentro de seeds:
-
-server.db.loadData({
-                users:[
-                    {
-                        name: 'seuNome',
-                        email: 'seuEmail',
-                        password: 'suaSenha'
-                    }
-                ]
-})
- 
+# Vá até o arquivo src/services/mirage/index.ts e adicione seu nome, e-mail, password dentro de seeds/server.db.loadData:
+users:[
+        {
+            name: 'seuNome',
+            email: 'seuEmail',
+            password: 'suaSenha'
+        }
+    ]
+Esse será seu e-mail e password para entrar na aplicação.
 
 # Iniciando projeto
 yarn dev
